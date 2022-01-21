@@ -5,8 +5,8 @@ resource "aws_security_group" "sg-ec2" {
 
   ingress {
     description      = "HTTP"
-    from_port        = 80
-    to_port          = 80
+    from_port        = var.APP_PORT
+    to_port          = var.APP_PORT
     protocol         = "tcp"
     cidr_blocks      = data.terraform_remote_state.vpc.outputs.PRIVATE_CIDR
   }
