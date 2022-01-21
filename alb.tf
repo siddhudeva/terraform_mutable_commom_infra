@@ -1,7 +1,7 @@
 
 resource "aws_lb_target_group" "tg" {
   name     = "${var.ENV}-${var.COMPONENT}-tg"
-  port     = 80
+  port     = var.APP_PORT //to check the health of the instances thats why we listener and tg ports are should same
   protocol = "HTTP"
   vpc_id   = data.terraform_remote_state.vpc.outputs.VPC_ID
 }
@@ -15,7 +15,7 @@ resource "aws_lb_target_group_attachment" "tg-attach" {
 resource "aws_lb_listener" "alb-listener" {
   count             = var.LB_PUBLIC ? 1 : 0
   load_balancer_arn = data.terraform_remote_state.alb.outputs.alb_public_arn
-  port              = "80"
+  port              = 80
   protocol          = "HTTP"
 
   default_action {
