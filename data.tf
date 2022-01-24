@@ -22,10 +22,10 @@ data "terraform_remote_state" "alb" {
 }
 
 ////here we are trying to get secrets form aws secrets form aws secret manager
-data "aws_secretsmanager_secret" "secret" {
+data "aws_secretsmanager_secret" "Secrets" {
   name = "nexus"
 }
 ///// why????
 data "aws_secretsmanager_secret_version" "secret-ssh" {
-  secret_id = data.aws_secretsmanager_secret.secret.id
+  secret_id = data.aws_secretsmanager_secret.Secrets.id
 }
