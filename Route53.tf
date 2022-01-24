@@ -4,5 +4,5 @@ resource "aws_route53_record" "private_alb" {
   name    = "${var.COMPONENT}-${var.ENV}.roboshop.internal"
   type    = "A"
   ttl     = "300"
-  records = [data]
+  records = data.terraform_remote_state.alb.outputs.PUBLIC_LB_DNSNAME
 }
