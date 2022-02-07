@@ -4,6 +4,15 @@ resource "aws_lb_target_group" "tg" {
   port     = var.APP_PORT //to check the health of the instances thats why we listener and tg ports are should same
   protocol = "HTTP"
   vpc_id   = data.terraform_remote_state.vpc.outputs.VPC_ID
+  health_check {
+    enabled = true
+    healthy_threshold = 2
+    unhealthy_threshold = 2
+    interval = 5
+    path = "/health"
+    port = var.APP_PORT
+    timeout = 3
+  }
 }
 resource "aws_lb_target_group_attachment" "tg-attach" {
   count            = length(aws_spot_instance_request.ec2-spot)
@@ -15,7 +24,7 @@ resource "aws_lb_target_group_attachment" "tg-attach" {
 resource "aws_lb_listener" "alb-listener" {
   count             = var.LB_PUBLIC ? 1 : 0
   load_balancer_arn = data.terraform_remote_state.alb.outputs.alb_public_arn
-  port              = var.APP_PORT
+  port              = "80"
   protocol          = "HTTP"
 
   default_action {
