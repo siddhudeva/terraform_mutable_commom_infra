@@ -21,5 +21,4 @@ locals {
   SSH_PASSWD = jsondecode(data.aws_secretsmanager_secret_version.secret-ssh.secret_string)["SSH_PASSWD"]
   NEXUS_USERNAME = nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.secret-ssh.secret_string)["NEXUS_USR"])
   NEXUS_PASSWD = nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.secret-ssh.secret_string)["NEXUS_PSW"])
-
 }
